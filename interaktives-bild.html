@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interaktive Grafik – Wissenswertes</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: #f8f9fa;
+      font-family: sans-serif;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Interaktive Grafik -->
+  <img src="interaktives-bild.png" usemap="#image-map">
+  <map name="image-map">
+    <area alt="Werte im LP21" title="Werte im LP21"
+          href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2022/"
+          coords="768,160,118" shape="circle">
+
+    <area alt="Wertebildung im Vergleich" title="Wertebildung im Vergleich"
+          href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2024/"
+          coords="372,427,113" shape="circle">
+
+    <area alt="Werte und Schulklima" title="Werte und Schulklima"
+          href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2024b/"
+          coords="881,440,103" shape="circle">
+
+    <area alt="Stimme der Lehrperson" title="Stimme der Lehrperson"
+          href="https://wertebildung.unibas.ch/de/wissenswertes/doering-et-al-2024/"
+          coords="1154,365,104" shape="circle">
+
+    <area alt="Werte und Verhalten der Kinder im Verlauf" title="Werte und Verhalten der Kinder im Verlauf"
+          href="https://wertebildung.unibas.ch/de/wissenswertes/scholz-kuhn-et-al-2025/"
+          coords="386,681,118" shape="circle">
+
+    <area alt="Werte und Verhalten der Erstklässler*innen" title="Werte und Verhalten der Erstklässler*innen"
+          href="https://wertebildung.unibas.ch/de/wissenswertes/scholz-kuhn-et-al-2023/"
+          coords="520,820,110" shape="circle"> <!-- ⚠️ Koordinaten ersetzt -->
+  </map>
+
+  <!-- Script macht Hotspots responsiv -->
+  <script src="https://cdn.jsdelivr.net/npm/image-map-resizer@1.0.10/js/imageMapResizer.min.js"></script>
+  <script>
+    window.addEventListener('load', function(){
+      if (window.imageMapResize) imageMapResize();
+    });
+  </script>
+</body>
+</html>
