@@ -17,29 +17,29 @@
     .container {
       position: relative;
       display: inline-block;
+      line-height: 0; /* verhindert Lücken */
     }
 
-    img {
+    img#mapImage {
       max-width: 100%;
       height: auto;
       border: none;
       display: block;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Halbtransparente animierte Kreise (Hotspots) */
+    /* Overlay für sichtbare Hotspots */
     .overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none; /* Klicks gehen durch */
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; /* Klicks gehen durch zur Map */
+      z-index: 2;
     }
 
     .hotspot {
       position: absolute;
-      width: 60px;
-      height: 60px;
       border-radius: 50%;
       background-color: rgba(0, 153, 204, 0.25);
       border: 2px solid rgba(0, 153, 204, 0.7);
@@ -48,19 +48,126 @@
     }
 
     @keyframes pulse {
-      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
-      100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.9; }
+      50%  { transform: translate(-50%, -50%) scale(1.18); opacity: 0.45; }
+      100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.9; }
     }
 
-    area {
-      outline: none;
-    }
-
-    area:hover {
-      cursor: pointer;
-    }
+    area { outline: none; }
+    area:hover { cursor: pointer; }
   </style>
 </head>
 
-<body
+<body>
+  <div class="container" id="container">
+    <!-- Interaktive Grafik -->
+    <img id="mapImage"
+         src="interaktives-bild.png"
+         usemap="#image-map"
+         alt="Interaktive Grafik – Wissenswertes">
+
+    <!-- Sichtbare Hotspots (nutzen Original-Koordinaten als data-Attribute) -->
+    <div class="overlay" id="overlay">
+      <div class="hotspot" data-x="768"  data-y="160" data-r="118" title="Werte im LP21"></div>
+      <div class="hotspot" data-x="372"  data-y="427" data-r="113" title="Wertebildung im Vergleich"></div>
+      <div class="hotspot" data-x="881"  data-y="440" data-r="103" title="Werte und Schulklima"></div>
+      <div class="hotspot" data-x="1154" data-y="365" data-r="104" title="Stimme der Lehrperson"></div>
+      <div class="hotspot" data-x="386"  data-y="681" data-r="118" title="Werte & Verhalten (Verlauf)"></div>
+      <div class="hotspot" data-x="520"  data-y="820" data-r="110" title="Werte & Verhalten (1. Klasse)"></div>
+    </div>
+
+    <!-- Klickbare Map -->
+    <map name="image-map">
+      <area alt="Werte im LP21" title="Werte im LP21"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2022/"
+            coords="768,160,118" shape="circle">
+
+      <area alt="Wertebildung im Vergleich" title="Wertebildung im Vergleich"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2024/"
+            coords="372,427,113" shape="circle">
+
+      <area alt="Werte und Schulklima" title="Werte und Schulklima"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2024b/"
+            coords="881,440,103" shape="circle">
+
+      <area alt="Stimme der Lehrperson" title="Stimme der Lehrperson"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/doering-et-al-2024/"
+            coords="1154,365,104" shape="circle">
+
+      <area alt="Werte und Verhalten der Kinder im Verlauf" title="Werte und Verhalten der Kinder im Verlauf"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/scholz-kuhn-et-al-2025/"
+            coords="386,681,118" shape="circle">
+
+      <area alt="Werte und Verhalten der Erstklässler*innen" title="Werte und Verhalten der Erstklässler*innen"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/scholz-kuhn-et-al-2023/"
+            coords="520,820,110" shape="circle">
+    </map>
+  </div>
+
+  <!-- Responsives Skalieren der Map -->
+  <script src="https://cdn.jsdelivr.net/npm/image-map-resizer@1.0.10/js/imageMapResizer.min.js"></script>
+
+  <script>
+    (function(){
+      // Natural width des Bildes bestimmen
+      const img = document.getElementById('mapImage');
+      const overlay = document.getElementById('overlay');
+      const hotspots = Array.from(document.querySelectorAll('.hotspot'));
+
+      function getNaturalSize(image) {
+        const tmp = new Image();
+        tmp.src = image.currentSrc || image.src;
+        return new Promise((resolve) => {
+          if (tmp.complete) {
+            resolve({ w: tmp.naturalWidth, h: tmp.naturalHeight });
+          } else {
+            tmp.onload = () => resolve({ w: tmp.naturalWidth, h: tmp.naturalHeight });
+          }
+        });
+      }
+
+      let natural = { w: 0, h: 0 };
+
+      function positionHotspots() {
+        if (!natural.w || !img.clientWidth) return;
+        const scale = img.clientWidth / natural.w;
+
+        // Overlay an Bildgröße anpassen
+        overlay.style.width  = img.clientWidth + 'px';
+        overlay.style.height = img.clientHeight + 'px';
+
+        // Hotspots skalieren/platzieren
+        hotspots.forEach(h => {
+          const x = parseFloat(h.dataset.x);
+          const y = parseFloat(h.dataset.y);
+          const r = parseFloat(h.dataset.r);
+
+          const left = x * scale;
+          const top  = y * scale;
+          // Größe: proportional zum Radius, aber nicht zu groß/klein
+          const size = Math.max(20, Math.min(60, r * scale * 0.6));
+
+          h.style.left = left + 'px';
+          h.style.top  = top  + 'px';
+          h.style.width  = size + 'px';
+          h.style.height = size + 'px';
+        });
+      }
+
+      function init() {
+        // Map-Coords responsiv machen
+        if (window.imageMapResize) imageMapResize();
+
+        // Natural size lesen & erste Positionierung
+        getNaturalSize(img).then(ns => {
+          natural = ns;
+          positionHotspots();
+        });
+      }
+
+      window.addEventListener('load', init);
+      window.addEventListener('resize', positionHotspots);
+    })();
+  </script>
+</body>
+</html>
