@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Wertekreis</title>
+  <title>Wertekreis</title>
 
   <style>
     body {
@@ -15,15 +15,12 @@
       color: #333;
     }
 
-    img {
-      max-width: 100%;
-      height: auto;
-      border: none;
-    }
+    img { max-width: 100%; height: auto; border: none; }
 
     area { cursor: pointer; }
+    area:hover { outline: 3px solid rgba(79,176,168,0.6); }
 
-    /* Popup-Fenster */
+    /* Pop-up Styling */
     .info-box {
       display: none;
       position: fixed;
@@ -33,31 +30,23 @@
       border: 3px solid #4fb0a8;
       padding: 24px 28px;
       border-radius: 14px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
       max-width: 440px;
       text-align: left;
       z-index: 10;
       animation: fadeIn 0.3s ease;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translate(-50%, -45%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
+      to   { opacity: 1; transform: translate(-50%, -50%); }
     }
-
     h3 {
-      margin-top: 0.2em;
-      margin-bottom: 0.5em;
+      margin: 0.2em 0 0.5em;
       color: #007f99;
       font-size: 1.3em;
       letter-spacing: 0.3px;
     }
-
-    p {
-      line-height: 1.5;
-      font-size: 1em;
-      color: #333;
-    }
+    p { line-height: 1.5; font-size: 1em; color: #333; }
 
     .close-btn {
       float: right;
@@ -66,25 +55,16 @@
       font-size: 22px;
       color: #007f99;
       cursor: pointer;
-      transition: color 0.2s;
     }
-
-    .close-btn:hover {
-      color: #004d58;
-    }
+    .close-btn:hover { color: #004d58; }
 
     .overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      inset: 0;
       background: rgba(79,176,168,0.25);
       z-index: 5;
       backdrop-filter: blur(2px);
-    }
-
-    area:hover {
-      outline: 3px solid rgba(79,176,168,0.6);
     }
   </style>
 </head>
@@ -95,35 +75,40 @@
     Klicken Sie auf die verschiedenen Wertetypen, um mehr über ihre Bedeutung zu erfahren.
   </p>
 
-  <img src="interaktives-bild-2.png.jpg" usemap="#image-map" alt="Interaktive Grafik der Wertebereiche">
+  <!-- WICHTIG: stimmt der Dateiname exakt? -->
+  <img src="interaktives-bild-2.png.jpg" usemap="#image-map" alt="Wertekreis – Interaktive Grafik der Wertebereiche">
 
   <map name="image-map">
-    <area title="feld1" alt="Leistung" shape="poly" coords="48,1022,326,1402,764,783,157,1242,57,1016,762,786,160,1241,148,1238,152,1232,323,1402,157,1242,312,1388,334,1407">
-    <area title="feld2" alt="Macht" shape="poly" coords="332,1407,772,1546,547,1518,774,1543,765,795,328,1407,537,1512,556,1481,468,1452,353,1417,765,1543,536,1516,556,1483">
-    <area title="feld3" alt="Sicherheit" shape="poly" coords="782,1543,1224,1404,781,789,786,1556,1021,1516,1228,1404">
-    <area title="feld4" alt="Konformität" shape="poly" coords="790,784,1518,1018,1240,1399,944,1000,800,799">
-    <area title="feld5" alt="Tradition" shape="poly" coords="792,774,1514,539,1518,1012">
-    <area title="feld6" alt="Wohlwollen" shape="poly" coords="787,766,1239,158,1519,534">
-    <area title="feld7" alt="Universalismus" shape="poly" coords="781,759,782,7,1223,147">
-    <area title="feld8" alt="Selbstbestimmung" shape="poly" coords="771,758,331,154,776,6">
-    <area title="feld9" alt="Anregung" shape="poly" coords="765,763,46,530,323,151">
-    <area title="feld10" alt="Hedonismus" shape="poly" coords="45,1008,38,535,770,779">
+    <area href="#" data-target="feld1"  title="Leistung: die/der Beste sein"       alt="Leistung"
+          shape="poly" coords="48,1022,326,1402,764,783,157,1242,57,1016,762,786,160,1241,148,1238,152,1232,323,1402,157,1242,312,1388,334,1407">
+    <area href="#" data-target="feld2"  title="Macht: reich und mächtig sein"       alt="Macht"
+          shape="poly" coords="332,1407,772,1546,547,1518,774,1543,765,795,328,1407,537,1512,556,1481,468,1452,353,1417,765,1543,536,1516,556,1483">
+    <area href="#" data-target="feld3"  title="Sicherheit: sicher sein"             alt="Sicherheit"
+          shape="poly" coords="782,1543,1224,1404,781,789,786,1556,1021,1516,1228,1404">
+    <area href="#" data-target="feld4"  title="Konformität: Regeln beachten"        alt="Konformität"
+          shape="poly" coords="790,784,1518,1018,1240,1399,944,1000,800,799">
+    <area href="#" data-target="feld5"  title="Tradition: an Gott denken"           alt="Tradition"
+          shape="poly" coords="792,774,1514,539,1518,1012">
+    <area href="#" data-target="feld6"  title="Wohlwollen: anderen helfen"          alt="Wohlwollen"
+          shape="poly" coords="787,766,1239,158,1519,534">
+    <area href="#" data-target="feld7"  title="Universalismus: neue Freundschaften schliessen" alt="Universalismus"
+          shape="poly" coords="781,759,782,7,1223,147">
+    <area href="#" data-target="feld8"  title="Selbstbestimmung: Neues entdecken"   alt="Selbstbestimmung"
+          shape="poly" coords="771,758,331,154,776,6">
+    <area href="#" data-target="feld9"  title="Anregung: aufregende Sachen machen"  alt="Anregung"
+          shape="poly" coords="765,763,46,530,323,151">
+    <area href="#" data-target="feld10" title="Hedonismus: das Leben geniessen"     alt="Hedonismus"
+          shape="poly" coords="45,1008,38,535,770,779">
   </map>
 
   <div class="overlay" id="overlay" onclick="closeInfo()"></div>
 
+  <!-- Pop-ups -->
   <div class="info-box" id="feld1">
-    <button class="close-btn" onclick="closeInfo()">×</button>
+    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
     <h3>Leistung: die/der Beste sein</h3>
     <p>Persönlicher Erfolg durch Kompetenz und Anstrengung, gemessen an schulischen und gesellschaftlichen Standards.</p>
   </div>
 
   <div class="info-box" id="feld2">
-    <button class="close-btn" onclick="closeInfo()">×</button>
-    <h3>Macht: reich und mächtig sein</h3>
-    <p>Einfluss, Kontrolle und Ansehen – das Streben nach Status und Autorität über andere.</p>
-  </div>
-
-  <div class="info-box" id="feld3">
-    <button class="close-btn" onclick="closeInfo()">×</button>
-    <h3>Sicherheit: sicher sein</h3>
+    <button class="close-btn" onclick="closeInfo()" aria-label="Schlie
