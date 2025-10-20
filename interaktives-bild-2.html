@@ -1,9 +1,9 @@
-te<!doctype html>
+<!doctype html>
 <html lang="de">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Wertebkreis</title>
+  <title> Wertekreis</title>
 
   <style>
     body {
@@ -11,7 +11,8 @@ te<!doctype html>
       padding: 0;
       text-align: center;
       background: #f8f9fa;
-      font-family: sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
     }
 
     img {
@@ -22,16 +23,18 @@ te<!doctype html>
 
     area { cursor: pointer; }
 
+    /* Popup-Fenster */
     .info-box {
       display: none;
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      max-width: 400px;
+      background: #ffffff;
+      border: 3px solid #4fb0a8;
+      padding: 24px 28px;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      max-width: 440px;
       text-align: left;
       z-index: 10;
       animation: fadeIn 0.3s ease;
@@ -42,13 +45,32 @@ te<!doctype html>
       to { opacity: 1; transform: translate(-50%, -50%); }
     }
 
+    h3 {
+      margin-top: 0.2em;
+      margin-bottom: 0.5em;
+      color: #007f99;
+      font-size: 1.3em;
+      letter-spacing: 0.3px;
+    }
+
+    p {
+      line-height: 1.5;
+      font-size: 1em;
+      color: #333;
+    }
+
     .close-btn {
       float: right;
       background: none;
       border: none;
-      font-size: 20px;
-      color: #555;
+      font-size: 22px;
+      color: #007f99;
       cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .close-btn:hover {
+      color: #004d58;
     }
 
     .overlay {
@@ -56,19 +78,22 @@ te<!doctype html>
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
+      background: rgba(79,176,168,0.25);
       z-index: 5;
+      backdrop-filter: blur(2px);
     }
 
-    h3 {
-      margin-top: 0.2em;
-      color: #007f99;
+    area:hover {
+      outline: 3px solid rgba(79,176,168,0.6);
     }
   </style>
 </head>
 
 <body>
-  <h2>Interaktive Grafik: Wertebereiche</h2>
+  <h2 style="color:#007f99; margin-top:20px;">Wertekreis</h2>
+  <p style="color:#444; font-size:1.05em; margin-top:-5px; margin-bottom:20px;">
+    Klicken Sie auf die verschiedenen Wertetypen, um mehr über ihre Bedeutung zu erfahren.
+  </p>
 
   <img src="interaktives-bild-2.png.jpg" usemap="#image-map" alt="Interaktive Grafik der Wertebereiche">
 
@@ -77,4 +102,28 @@ te<!doctype html>
     <area title="feld2" alt="Macht" shape="poly" coords="332,1407,772,1546,547,1518,774,1543,765,795,328,1407,537,1512,556,1481,468,1452,353,1417,765,1543,536,1516,556,1483">
     <area title="feld3" alt="Sicherheit" shape="poly" coords="782,1543,1224,1404,781,789,786,1556,1021,1516,1228,1404">
     <area title="feld4" alt="Konformität" shape="poly" coords="790,784,1518,1018,1240,1399,944,1000,800,799">
+    <area title="feld5" alt="Tradition" shape="poly" coords="792,774,1514,539,1518,1012">
+    <area title="feld6" alt="Wohlwollen" shape="poly" coords="787,766,1239,158,1519,534">
+    <area title="feld7" alt="Universalismus" shape="poly" coords="781,759,782,7,1223,147">
+    <area title="feld8" alt="Selbstbestimmung" shape="poly" coords="771,758,331,154,776,6">
+    <area title="feld9" alt="Anregung" shape="poly" coords="765,763,46,530,323,151">
+    <area title="feld10" alt="Hedonismus" shape="poly" coords="45,1008,38,535,770,779">
+  </map>
 
+  <div class="overlay" id="overlay" onclick="closeInfo()"></div>
+
+  <div class="info-box" id="feld1">
+    <button class="close-btn" onclick="closeInfo()">×</button>
+    <h3>Leistung: die/der Beste sein</h3>
+    <p>Persönlicher Erfolg durch Kompetenz und Anstrengung, gemessen an schulischen und gesellschaftlichen Standards.</p>
+  </div>
+
+  <div class="info-box" id="feld2">
+    <button class="close-btn" onclick="closeInfo()">×</button>
+    <h3>Macht: reich und mächtig sein</h3>
+    <p>Einfluss, Kontrolle und Ansehen – das Streben nach Status und Autorität über andere.</p>
+  </div>
+
+  <div class="info-box" id="feld3">
+    <button class="close-btn" onclick="closeInfo()">×</button>
+    <h3>Sicherheit: sicher sein</h3>
