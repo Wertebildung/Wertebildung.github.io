@@ -12,18 +12,27 @@
     img { max-width: 100%; height: auto; border: none; }
     area { cursor: pointer; }
     area:hover { outline: 3px solid rgba(79,176,168,0.6); }
+
     /* Pop-up */
     .info-box {
       display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
       background: #fff; border: 3px solid #4fb0a8; padding: 24px 28px; border-radius: 14px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25); max-width: 440px; text-align: left; z-index: 10;
-      animation: fadeIn 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25); max-width: 720px; width: calc(100% - 40px);
+      text-align: left; z-index: 10; animation: fadeIn 0.3s ease;
+      max-height: 80vh; overflow: auto;
     }
     @keyframes fadeIn { from {opacity:0; transform: translate(-50%, -45%);} to {opacity:1; transform: translate(-50%, -50%);} }
-    h3 { margin: .2em 0 .5em; color: #007f99; font-size: 1.3em; letter-spacing: .3px; }
-    p { line-height: 1.5; font-size: 1em; color: #333; }
-    .close-btn { float: right; background: none; border: none; font-size: 22px; color: #007f99; cursor: pointer; }
+    h3 { margin: .2em 0 .5em; color: #007f99; font-size: 1.4em; letter-spacing: .2px; }
+    h4 { margin: .8em 0 .2em; color:#005e6d; font-size:1.05em; }
+    p, li { line-height: 1.6; font-size: 1em; color: #333; }
+    ul { margin: .2em 0 .6em 1.2em; }
+    .quote { font-style: italic; background:#f2fbfa; border-left: 3px solid #4fb0a8; padding:.6em .8em; border-radius:8px; }
+
+    .close-btn {
+      float: right; background: none; border: none; font-size: 22px; color: #007f99; cursor: pointer;
+    }
     .close-btn:hover { color: #004d58; }
+
     .overlay {
       display: none; position: fixed; inset: 0; background: rgba(79,176,168,0.25);
       z-index: 5; backdrop-filter: blur(2px);
@@ -36,84 +45,224 @@
     Klicken Sie auf die verschiedenen Wertetypen, um mehr über ihre Bedeutung zu erfahren.
   </p>
 
-  <!-- Bild (Dateiname prüfen!) -->
+  <!-- Bild (Dateiname ggf. anpassen) -->
   <img id="wertekreis" src="interaktives-bild-2.png" usemap="#image-map" alt="Wertekreis – Interaktive Grafik der Wertebereiche" />
 
+  <!-- Klickflächen -->
   <map name="image-map">
-    <area href="#" data-target="feld1"  title="Leistung: die/der Beste sein"                  alt="Leistung"
+    <area href="#" data-target="feld1"
+          title="Leistung: die/der Beste sein" alt="Leistung"
           shape="poly" coords="48,1022,326,1402,764,783,157,1242,57,1016,762,786,160,1241,148,1238,152,1232,323,1402,157,1242,312,1388,334,1407" />
-    <area href="#" data-target="feld2"  title="Macht: reich und mächtig sein"                  alt="Macht"
+    <area href="#" data-target="feld2"
+          title="Macht: reich und mächtig sein" alt="Macht"
           shape="poly" coords="332,1407,772,1546,547,1518,774,1543,765,795,328,1407,537,1512,556,1481,468,1452,353,1417,765,1543,536,1516,556,1483" />
-    <area href="#" data-target="feld3"  title="Sicherheit: sicher sein"                        alt="Sicherheit"
+    <area href="#" data-target="feld3"
+          title="Sicherheit: sicher sein" alt="Sicherheit"
           shape="poly" coords="782,1543,1224,1404,781,789,786,1556,1021,1516,1228,1404" />
-    <area href="#" data-target="feld4"  title="Konformität: Regeln beachten"                   alt="Konformität"
+    <area href="#" data-target="feld4"
+          title="Konformität: Regeln beachten" alt="Konformität"
           shape="poly" coords="790,784,1518,1018,1240,1399,944,1000,800,799" />
-    <area href="#" data-target="feld5"  title="Tradition: an Gott denken"                      alt="Tradition"
+    <area href="#" data-target="feld5"
+          title="Tradition: an Gott denken" alt="Tradition"
           shape="poly" coords="792,774,1514,539,1518,1012" />
-    <area href="#" data-target="feld6"  title="Wohlwollen: anderen helfen"                     alt="Wohlwollen"
+    <area href="#" data-target="feld6"
+          title="Wohlwollen: anderen helfen" alt="Wohlwollen"
           shape="poly" coords="787,766,1239,158,1519,534" />
-    <area href="#" data-target="feld7"  title="Universalismus: neue Freundschaften schliessen" alt="Universalismus"
+    <area href="#" data-target="feld7"
+          title="Universalismus: neue Freundschaften schliessen" alt="Universalismus"
           shape="poly" coords="781,759,782,7,1223,147" />
-    <area href="#" data-target="feld8"  title="Selbstbestimmung: Neues entdecken"              alt="Selbstbestimmung"
+    <area href="#" data-target="feld8"
+          title="Selbstbestimmung: Neues entdecken" alt="Selbstbestimmung"
           shape="poly" coords="771,758,331,154,776,6" />
-    <area href="#" data-target="feld9"  title="Anregung: aufregende Sachen machen"             alt="Anregung"
+    <area href="#" data-target="feld9"
+          title="Anregung (Stimulation): aufregende Sachen machen" alt="Anregung"
           shape="poly" coords="765,763,46,530,323,151" />
-    <area href="#" data-target="feld10" title="Hedonismus: das Leben geniessen"                alt="Hedonismus"
+    <area href="#" data-target="feld10"
+          title="Hedonismus: das Leben geniessen" alt="Hedonismus"
           shape="poly" coords="45,1008,38,535,770,779" />
   </map>
 
   <div class="overlay" id="overlay" onclick="closeInfo()"></div>
 
-  <!-- Pop-ups -->
-  <div class="info-box" id="feld1">
-    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
-    <h3>Leistung: die/der Beste sein</h3>
-    <p>Persönlicher Erfolg durch Kompetenz und Anstrengung, gemessen an schulischen und gesellschaftlichen Standards.</p>
-  </div>
-  <div class="info-box" id="feld2">
-    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
-    <h3>Macht: reich und mächtig sein</h3>
-    <p>Sozialer Status, Kontrolle und Einfluss über Menschen und Ressourcen.</p>
-  </div>
-  <div class="info-box" id="feld3">
-    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
-    <h3>Sicherheit: sicher sein</h3>
-    <p>Stabilität, Schutz und Harmonie innerhalb der Gesellschaft und des eigenen Umfelds.</p>
-  </div>
-  <div class="info-box" id="feld4">
-    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
-    <h3>Konformität: Regeln beachten</h3>
-    <p>Das Einhalten sozialer Normen und Regeln, um Konflikte zu vermeiden.</p>
-  </div>
-  <div class="info-box" id="feld5">
-    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
-    <h3>Tradition: an Gott denken</h3>
-    <p>Respekt und Wertschätzung für kulturelle und familiäre Bräuche und Überzeugungen.</p>
-  </div>
-  <div class="info-box" id="feld6">
-    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
-    <h3>Wohlwollen: anderen helfen</h3>
-    <p>Fürsorge und Hilfsbereitschaft gegenüber anderen Menschen.</p>
-  </div>
+  <!-- Pop-ups (ausführliche Inhalte) -->
+
   <div class="info-box" id="feld7">
     <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
     <h3>Universalismus: neue Freundschaften schliessen</h3>
-    <p>Engagement für Gerechtigkeit, Gleichheit und das Wohl aller Lebewesen.</p>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Verstehen, Fürsorge und Interesse am Wohlergehen aller Menschen und der Natur.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Behandle alle Schüler*innen fair, auch wenn du sie nicht magst.</li>
+      <li>Nimm an Schulaktivitäten teil, die den Wert der Natur fördern.</li>
+      <li>Lass alle Schüler*innen sich wertgeschätzt fühlen, unabhängig von ihrer Leistung.</li>
+      <li>Lehre die Schüler*innen die Bedeutung des Schutzes unseres Planeten.</li>
+      <li>Feiere menschliche Vielfalt.</li>
+      <li>Versuche, Schüler*innen mit Ansichten, die du nicht teilst, zu verstehen.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„Es geht eher um Gleichheit – alle gleich zu behandeln, den Hintergrund, die Kultur, die Religion, die Hautfarbe jedes Einzelnen zu respektieren … Ich versuche nicht zu predigen, sondern Dinge, die mir auffallen, dezent anzusprechen.“</p>
   </div>
-  <div class="info-box" id="feld8">
+
+  <div class="info-box" id="feld6">
     <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
-    <h3>Selbstbestimmung: Neues entdecken</h3>
-    <p>Unabhängigkeit und Freiheit im Denken und Handeln.</p>
+    <h3>Wohlwollen: anderen helfen</h3>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Sorge für das Wohlergehen nahestehender Personen.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Sei freundlich zu Schüler*innen.</li>
+      <li>Halte die Versprechen, die du Schüler*innen gegeben hast.</li>
+      <li>Achte auf Schüler*innen, die Hilfe brauchen könnten, und biete Unterstützung an.</li>
+      <li>Vergib Schüler*innen, die deine Gefühle verletzt haben.</li>
+      <li>Sei warmherzig zu Schüler*innen.</li>
+      <li>Versuche, ein Kind in Not zu unterstützen.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„Empathie – sich in jemand anderes hineinversetzen. Viele Kinder kennen diesen Ausdruck, aber sie tun sich schwer damit. Also versucht man, das ganz explizit zu lehren.“</p>
   </div>
-  <div class="info-box" id="feld9">
+
+  <div class="info-box" id="feld5">
     <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
-    <h3>Anregung: aufregende Sachen machen</h3>
-    <p>Neugier und Freude an Abwechslung, Herausforderung und neuen Erfahrungen.</p>
+    <h3>Tradition: an Gott denken</h3>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Respekt und Verpflichtung gegenüber den Bräuchen und Überzeugungen der Familie, der traditionellen Kultur oder Religion.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Feiere religiöse Feste mit den Schüler*innen.</li>
+      <li>Bewahre die Traditionen der Schule.</li>
+      <li>Lehre Schüler*innen, Traditionen und Religionen zu respektieren.</li>
+      <li>Zeige Bescheidenheit in Bezug auf deine Leistungen und Talente.</li>
+      <li>Sprich über Traditionen und Religionen.</li>
+      <li>Beschwere dich nicht über unangenehme Ereignisse.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„Wenn ich eine Versammlung leite, dann vielleicht, um ein religiöses Fest zu feiern.“</p>
   </div>
+
+  <div class="info-box" id="feld4">
+    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
+    <h3>Konformität: Regeln beachten</h3>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Zurückhaltung bei Handlungen, die andere verärgern oder verletzen könnten, sowie das Einhalten gesellschaftlicher Erwartungen.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Befolge die Schulregeln.</li>
+      <li>Erläutere die Schulregeln den Schüler*innen.</li>
+      <li>Sorge dafür, dass sich die Schüler*innen an die Regeln halten.</li>
+      <li>Verhalte dich konsequent nach den Erwartungen der Schule.</li>
+      <li>Sei immer höflich.</li>
+      <li>Vermeide Streit und Konfrontationen mit Vorgesetzten.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„In Schulversammlungen werden deutliche Botschaften vermittelt, wie man sich in einer formellen Situation verhält – man soll ruhig sitzen und höflich zuhören.“</p>
+  </div>
+
+  <div class="info-box" id="feld3">
+    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
+    <h3>Sicherheit: sicher sein</h3>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Sicherheit, Harmonie und Stabilität der Gesellschaft, der Beziehungen und der eigenen Person.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Sorge dafür, dass die Schüler*innen sicher sind.</li>
+      <li>Halte deinen Arbeitsplatz (z. B. Schreibtisch) sauber und ordentlich.</li>
+      <li>Lehre über Gesundheit und Sicherheit.</li>
+      <li>Sorge für soziale Ordnung in der Schule, damit die Umgebung vorhersehbar bleibt.</li>
+      <li>Reagiere sofort auf Sicherheitsbedenken.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„Im Informatikunterricht konzentrieren wir uns darauf, wie man online sicher bleibt und was man tun soll, wenn man auf etwas Unsicheres stösst.“</p>
+  </div>
+
+  <div class="info-box" id="feld2">
+    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
+    <h3>Macht: reich und mächtig sein</h3>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Sozialer Status und Prestige, Kontrolle oder Dominanz über Menschen und Ressourcen.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Bestrafe Schüler*innen streng, die dir nicht gehorchen.</li>
+      <li>Setze Schüler*innen unter Druck, Wettbewerbe zwischen Schulen zu gewinnen.</li>
+      <li>Zeige deine Autorität im Klassenzimmer auf jede Weise.</li>
+      <li>Kommuniziere deinen hohen Status im Vergleich zu den Schüler*innen.</li>
+      <li>Versuche, teure Dinge zu besitzen, um Eindruck zu machen (z. B. Accessoires).</li>
+      <li>Setze deine Kontrolle im Unterricht durch.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„Wir sagen: Geht raus, um zu gewinnen!“</p>
+  </div>
+
+  <div class="info-box" id="feld1">
+    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
+    <h3>Leistung: die/der Beste sein</h3>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Persönlicher Erfolg durch das Zeigen von Kompetenz nach gesellschaftlichen Massstäben.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Ermutige zu hohen schulischen Leistungen.</li>
+      <li>Belohne Schüler*innen für schulische Erfolge.</li>
+      <li>Lobe Schüler*innen mit guten Leistungen öffentlich.</li>
+      <li>Fördere Fleiss und Zielstrebigkeit.</li>
+      <li>Erzähle von erfolgreichen Menschen.</li>
+      <li>Versuche, die Schüler*innen durch dein Auftreten zu beeindrucken.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„In der Feier am Freitag werden Zertifikate für Leistungen verliehen.“</p>
+  </div>
+
   <div class="info-box" id="feld10">
     <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
     <h3>Hedonismus: das Leben geniessen</h3>
-    <p>Suche nach Genuss, Freude und sinnlicher Befriedigung.</p>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Vergnügen oder sinnliche Befriedigung für sich selbst.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Gestalte deinen Unterricht unterhaltsam und angenehm.</li>
+      <li>Habe möglichst viel Spass mit den Schüler*innen.</li>
+      <li>Initiiere lustige Schulaktivitäten.</li>
+      <li>Sei stets fröhlich und gut gelaunt.</li>
+      <li>Ermutige die Schüler*innen, in den Pausen draussen Spass zu haben.</li>
+      <li>Baue spielerische Elemente in den Unterricht ein.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„Wir lassen sie Dinge nachspielen, um den Unterricht lustig zu gestalten.“</p>
+  </div>
+
+  <div class="info-box" id="feld9">
+    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
+    <h3>Anregung (Stimulation): aufregende Sachen machen</h3>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Abenteuer, Abwechslung und Herausforderung im Leben.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Ermutige Schüler*innen, Neues auszuprobieren.</li>
+      <li>Bringe Abwechslung in den Unterricht.</li>
+      <li>Ermutige Schüler*innen, ihre Komfortzone zu verlassen.</li>
+      <li>Initiiere spannende Aktivitäten wie Unterricht im Freien oder Schulausflüge.</li>
+      <li>Lass Schüler*innen mit neuen Partner*innen zusammenarbeiten.</li>
+      <li>Motiviere Schüler*innen, sich herausfordernde Ziele zu setzen.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„Der Waldunterricht ist eine Gelegenheit für Kinder, ihre Komfortzone zu verlassen, Entschlossenheit zu zeigen und einfach mitzumachen.“</p>
+  </div>
+
+  <div class="info-box" id="feld8">
+    <button class="close-btn" onclick="closeInfo()" aria-label="Schließen">×</button>
+    <h3>Selbstbestimmung: Neues entdecken</h3>
+    <h4>Was ist dieser Wert?</h4>
+    <p>Unabhängiges Denken und Handeln.</p>
+    <h4>Wie kann ich als Lehrperson diesen Wert in der Schule zeigen?</h4>
+    <ul>
+      <li>Gib Aufgaben, die es Schüler*innen ermöglichen, eigene Entscheidungen zu treffen.</li>
+      <li>Ermutige Schüler*innen, neue Ideen zu entwickeln.</li>
+      <li>Erlaube Wahlfreiheit bei Themen.</li>
+      <li>Fördere die Selbstständigkeit der Schüler*innen.</li>
+      <li>Gib Aufgaben, die Kreativität ermöglichen.</li>
+      <li>Nutze Debatten, um Argumentationsfähigkeit zu lehren.</li>
+    </ul>
+    <h4>Eine Lehrperson sagte:</h4>
+    <p class="quote">„Ich versuche, den Kindern die Möglichkeit zu geben, ihr Lernen selbst zu steuern – etwa, welche Strategie sie in Mathematik anwenden, um ein Problem zu lösen, oder in Sport, wo sie eigene Balancen oder Turnsequenzen gestalten können.“</p>
   </div>
 
   <!-- Responsives Image-Map-Sizing -->
@@ -131,8 +280,7 @@
         e.preventDefault();
         const id = this.getAttribute('data-target');
         const box = document.getElementById(id);
-        if (!box) return; // Sicherheitsnetz
-        // Alte Boxen schließen, neue öffnen
+        if (!box) return;
         document.querySelectorAll('.info-box').forEach(b => b.style.display = 'none');
         document.getElementById('overlay').style.display = 'block';
         box.style.display = 'block';
@@ -146,4 +294,3 @@
   </script>
 </body>
 </html>
-
