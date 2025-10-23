@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interaktive Grafik – Wissenswertes</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: #f8f9fa;
+      font-family: sans-serif;
+    }
+
+    .container {
+      position: relative;
+      display: inline-block;
+      line-height: 0; /* verhindert Lücken */
+    }
+
+    img#mapImage {
+      max-width: 100%;
+      height: auto;
+      border: none;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Overlay für sichtbare Hotspots */
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; /* Klicks gehen durch zur Map */
+      z-index: 2;
+    }
+
+    /* === GELBE HOTSPOTS (angepasst) === */
+    .hotspot {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 193, 7, 0.28);   /* gelb transparent */
+      border: 2px solid rgba(255, 193, 7, 0.9);    /* gelber Rahmen */
+      box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.18);
+      transform: translate(-50%, -50%);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%   { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+      50%  { transform: translate(-50%, -50%) scale(1.18); opacity: 0.6; }
+      100% { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+    }
+
+    /* Barrierearm: Animationen respektieren */
+    @media (prefers-reduced-motion: reduce) {
+      .hotspot { animation: none; }
+    }
+
+    area { outline: none; }
+    area:hover { cursor: pointer; }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="container">
+    <!-- Interaktive Grafik: NEUES BILD -->
+    <img id="mapImage"
+         src="Schulhaus.png"
+         usemap="#image-map"
+         alt="Interaktive Grafik – Wissenswertes">
+
+    <!-- Sichtbare Hotspots (Positionen entsprechend den Kreisen) -->
+    <div class="overlay" id="overlay">
+      <div class="hotspot" data-x="353"  data-y="407" data-r="114" title="Wertebildung im Vergleich"></div>
+      <div class="hotspot" data-x="911"  data-y="416" data-r="121" title="Werte und Schulklima"></div>
+      <div class="hotspot" data-x="1198" data-y="400" data-r="126" title="Wertevermittlung durch Lehrpersonen"></div>
+      <div class="hotspot" data-x="767"  data-y="148" data-r="123" title="Werte im Lehrplan 21"></div>
+      <div class="hotspot" data-x="399"  data-y="653" data-r="117" title="Werte & Verhalten der Kinder (Verlauf)"></div>
+      <div class="hotspot" data-x="672"  data-y="811" data-r="125" title="Werte & Verhalten der Erstklässler*innen"></div>
+    </div>
+
+    <!-- Klickbare Map -->
+    <map name="image-map">
+      <area alt="Wertebildung im Vergleich" title="Wertebildung im Vergleich"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2024/"
+            coords="353,407,114" shape="circle">
+
+      <area alt="Werte und Schulklima" title="Werte und Schulklima"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2024b/"
+            coords="911,416,121" shape="circle">
+
+      <area alt="Wertevermittlung durch Lehrpersonen" title="Wertevermittlung durch Lehrpersonen"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/doering-et-al-2024/"
+            coords="1198,400,126" shape="circle">
+
+      <area alt="Werte im Lehrplan 21" title="Werte im Lehrplan 21"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2022/"
+            coords="767,148,123" shape="circle">
+
+      <area alt="Werte und Verhalten der Kinder im Verlauf" title="Werte und Verhalten der Kinder im Verlauf"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/scholz-kuhn-et-al-2025/"
+            coords="399,653,117" shape="circle">
+
+      <area alt="Werte und Verhalten der Erstklässler*innen" title="Werte und Verhalten der Erstklässler*innen"
+            href="https://wertebildung.unibas.ch/de/wissenswertes/scholz-kuhn-et-al-2023/"
+            coords="672,811,125" shape="circle">
+    </map>
+  </div>
+
+  <!-- Responsives Skalieren der Map -->
+  <script src="https://cdn.jsdelivr.net/npm/image-map-resizer@1.0.10/js/imageMapResizer.min.js"></script>
+
+  <script>
+    (function(){
+      const img = document.getElementById('mapImage');
+      const overlay = document.getElementById('overlay');
+      const hotspots = Array.from(document.querySelectorAll('.hotspot'));
+
+      function getNaturalSize(image) {
+        const tmp = new Image();
+        tmp.src = image.currentSrc || image.src;
+        return new Promise((resolve) => {
+          if (tmp.complete) resolve({ w: tmp.naturalWidth, h: tmp.naturalHeight });
+          else tmp.onload = () => resolve({ w: tmp.naturalWidth, h: tmp.naturalHeight });
+        });
+      }
+
+      let natural = { w: 0, h: 0 };
+
+      function positionHotspots() {
+        if (!natural.w || !img.clientWidth) return;
+        const scaleX = img.clientWidth / natural.w;
+        const scaleY = img.clientHeight / natural.h;
+
+        overlay.style.width  = img.clientWidth + 'px';
+        overlay.style.height = img.clientHeight + 'px';
+
+        hotspots.forEach(h => {
+          const x = parseFloat(h.dataset.x);
+          const y = parseFloat(h.dataset.y);
+          const r = parseFloat(h.dataset.r);
+
+          const left = x * scaleX;
+          const top  = y * scaleY;
+          const size = Math.max(20, Math.min(64, r * Math.min(scaleX, scaleY) * 0.6));
+
+          h.style.left = left + 'px';
+          h.style.top  = top  + 'px';
+          h.style.width  = size + 'px';
+          h.style.height = size + 'px';
+        });
+      }
+
+      function init() {
+        if (window.imageMapResize) imageMapResize();   // Map responsiv
+        getNaturalSize(img).then(ns => { natural = ns; positionHotspots(); });
+      }
+
+      window.addEventListener('load', init);
+      window.addEventListener('resize', positionHotspots);
+    })();
+  </script>
+</body>
+</html>
