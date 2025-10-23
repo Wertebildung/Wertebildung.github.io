@@ -41,9 +41,9 @@
     .hotspot {
       position: absolute;
       border-radius: 50%;
-      background-color: rgba(20, 80, 45, 0.35);   /* dunkles grün, leicht transparent */
-      border: 2px solid rgba(20, 80, 45, 0.95);   /* satter grüner Rand */
-      box-shadow: 0 0 0 4px rgba(20, 80, 45, 0.25);
+      background-color: rgba(20, 80, 45, 0.35);
+      border: 3px solid rgba(20, 80, 45, 0.95);   /* NEU: 3px Rand */
+      box-shadow: 0 0 0 5px rgba(20, 80, 45, 0.25); /* NEU: etwas kräftigerer Glow */
       transform: translate(-50%, -50%);
       animation: pulse 2s infinite;
     }
@@ -81,7 +81,7 @@
       <div class="hotspot" data-x="672"  data-y="811" data-r="125" title="Werte & Verhalten der Erstklässler*innen"></div>
     </div>
 
-    <!-- Klickbare Map -->
+    <!-- Klickbare Map (unverändert) -->
     <map name="image-map">
       <area alt="Wertebildung im Vergleich" title="Wertebildung im Vergleich"
             href="https://wertebildung.unibas.ch/de/wissenswertes/oeschger-et-al-2024/"
@@ -144,7 +144,10 @@
 
           const left = x * scaleX;
           const top  = y * scaleY;
-          const size = Math.max(20, Math.min(64, r * Math.min(scaleX, scaleY) * 0.6));
+
+          // NEU: deutlich größere Marker
+          const baseScale = Math.min(scaleX, scaleY);
+          const size = Math.max(28, Math.min(110, r * baseScale * 1.0)); // vorher 0.6, max 64
 
           h.style.left = left + 'px';
           h.style.top  = top  + 'px';
