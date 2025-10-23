@@ -29,7 +29,7 @@
       z-index: 1;
     }
 
-    /* Overlay für sichtbare Hotspots */
+    /* === DUNKELGRÜNE HOTSPOTS === */
     .overlay {
       position: absolute;
       top: 0; left: 0;
@@ -38,24 +38,22 @@
       z-index: 2;
     }
 
-    /* === GELBE HOTSPOTS (angepasst) === */
     .hotspot {
       position: absolute;
       border-radius: 50%;
-      background-color: rgba(255, 193, 7, 0.28);   /* gelb transparent */
-      border: 2px solid rgba(255, 193, 7, 0.9);    /* gelber Rahmen */
-      box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.18);
+      background-color: rgba(20, 80, 45, 0.35);   /* dunkles grün, leicht transparent */
+      border: 2px solid rgba(20, 80, 45, 0.95);   /* satter grüner Rand */
+      box-shadow: 0 0 0 4px rgba(20, 80, 45, 0.25);
       transform: translate(-50%, -50%);
       animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
       0%   { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
-      50%  { transform: translate(-50%, -50%) scale(1.18); opacity: 0.6; }
+      50%  { transform: translate(-50%, -50%) scale(1.18); opacity: 0.65; }
       100% { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
     }
 
-    /* Barrierearm: Animationen respektieren */
     @media (prefers-reduced-motion: reduce) {
       .hotspot { animation: none; }
     }
@@ -67,13 +65,13 @@
 
 <body>
   <div class="container" id="container">
-    <!-- Interaktive Grafik: NEUES BILD -->
+    <!-- Interaktive Grafik -->
     <img id="mapImage"
          src="Schulhaus.png"
          usemap="#image-map"
          alt="Interaktive Grafik – Wissenswertes">
 
-    <!-- Sichtbare Hotspots (Positionen entsprechend den Kreisen) -->
+    <!-- Sichtbare Hotspots -->
     <div class="overlay" id="overlay">
       <div class="hotspot" data-x="353"  data-y="407" data-r="114" title="Wertebildung im Vergleich"></div>
       <div class="hotspot" data-x="911"  data-y="416" data-r="121" title="Werte und Schulklima"></div>
@@ -156,7 +154,7 @@
       }
 
       function init() {
-        if (window.imageMapResize) imageMapResize();   // Map responsiv
+        if (window.imageMapResize) imageMapResize();
         getNaturalSize(img).then(ns => { natural = ns; positionHotspots(); });
       }
 
