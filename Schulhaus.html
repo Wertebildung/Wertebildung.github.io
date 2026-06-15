@@ -165,5 +165,19 @@
       window.addEventListener('resize', positionHotspots);
     })();
   </script>
+
+   <script>
+  document.getElementById("mapImage").addEventListener("click", function(e) {
+    const rect = this.getBoundingClientRect();
+    const scaleX = this.naturalWidth / rect.width;
+    const scaleY = this.naturalHeight / rect.height;
+
+    const x = Math.round((e.clientX - rect.left) * scaleX);
+    const y = Math.round((e.clientY - rect.top) * scaleY);
+
+    alert("x = " + x + ", y = " + y);
+  });
+  </script>
+
 </body>
 </html>
